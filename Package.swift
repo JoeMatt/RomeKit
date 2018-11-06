@@ -14,8 +14,8 @@ let package = Package(
         .library(name: "RomeKit", targets: ["RomeKit"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "4.5.0"),
-        .package(url: "https://github.com/Hearst-DD/ObjectMapper.git", from: "2.2.0")
+        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "4.7.3"),
+        .package(url: "https://github.com/Hearst-DD/ObjectMapper.git", from: "3.4.0")
     ],
     targets: [
         .target(name: "RomeKit", dependencies: ["Alamofire", "ObjectMapper"]),
