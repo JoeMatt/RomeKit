@@ -4,22 +4,22 @@ import ObjectMapper
 public class Assets {
     
     public static func all(
-        queue: dispatch_queue_t? = nil,
-        completionHandler: ([Asset]?, Errors?) -> ()) {
+        queue: DispatchQueue? = nil,
+        completionHandler: @escaping ([Asset]?, Errors?) -> ()) {
         
-        let url = RomeRoutes.url(.Assets, params: [])
+        let url = RomeRoutes.url(route: .Assets, params: [])
         
-        NetworkManager.sharedInstance().request(.GET, url).validate().responseString(queue: queue) { response in
+        NetworkManager.shared.request(url).validate().responseString(queue: queue) { response in
             
             switch response.result {
-            case .Success(let assetsJSON):
-                if let assets = Mapper<Asset>().mapArray(assetsJSON) {
+            case .success(let assetsJSON):
+                if let assets = Mapper<Asset>().mapArray(JSONString: assetsJSON) {
                     completionHandler(assets, nil)
                 } else {
                     completionHandler(nil, Errors.ErrorMappingAssets)
                 }
-            case .Failure:
-                completionHandler(nil, Errors.errorTypeFromResponse(response.response))
+            case .failure:
+                completionHandler(nil, Errors.errorTypeFromResponse(response: response.response))
             }
             
         }
@@ -29,22 +29,22 @@ public class Assets {
     public static func getLatestAssetByRevision(
         name: String,
         revision: String,
-        queue: dispatch_queue_t? = nil,
-        completionHandler: (Asset?, Errors?) -> ()) {
+        queue: DispatchQueue? = nil,
+        completionHandler: @escaping (Asset?, Errors?) -> ()) {
         
-        let url = RomeRoutes.url(.Assets, params: [name, revision])
+        let url = RomeRoutes.url(route: .Assets, params: [name, revision])
         
-        NetworkManager.sharedInstance().request(.GET, url).validate().responseString(queue: queue) { response in
+        NetworkManager.shared.request(url).validate().responseString(queue: queue) { response in
             
             switch response.result {
-            case .Success(let assetJSON):
-                if let asset = Mapper<Asset>().map(assetJSON) {
+            case .success(let assetJSON):
+                if let asset = Mapper<Asset>().map(JSONString: assetJSON) {
                     completionHandler(asset, nil)
                 } else {
                     completionHandler(nil, Errors.ErrorMappingAsset)
                 }
-            case .Failure:
-                completionHandler(nil, Errors.errorTypeFromResponse(response.response))
+            case .failure:
+                completionHandler(nil, Errors.errorTypeFromResponse(response: response.response))
             }
             
         }
@@ -53,22 +53,22 @@ public class Assets {
     
     public static func getAssetById(
         id: String,
-        queue: dispatch_queue_t? = nil,
-        completionHandler: (Asset?, Errors?) -> ()) {
+        queue: DispatchQueue? = nil,
+        completionHandler: @escaping (Asset?, Errors?) -> ()) {
         
-        let url = RomeRoutes.url(.Assets, params: [id])
+        let url = RomeRoutes.url(route: .Assets, params: [id])
         
-        NetworkManager.sharedInstance().request(.GET, url).validate().responseString(queue: queue) { response in
+        NetworkManager.shared.request(url).validate().responseString(queue: queue) { response in
             
             switch response.result {
-            case .Success(let assetJSON):
-                if let asset = Mapper<Asset>().map(assetJSON) {
+            case .success(let assetJSON):
+                if let asset = Mapper<Asset>().map(JSONString: assetJSON) {
                     completionHandler(asset, nil)
                 } else {
                     completionHandler(nil, Errors.ErrorMappingAsset)
                 }
-            case .Failure:
-                completionHandler(nil, Errors.errorTypeFromResponse(response.response))
+            case .failure:
+                completionHandler(nil, Errors.errorTypeFromResponse(response: response.response))
             }
             
         }
@@ -78,50 +78,46 @@ public class Assets {
     public static func create(
         name: String,
         revision: String,
-        data: NSData,
-        queue: dispatch_queue_t? = nil,
-        progress: (Int64, Int64, Int64) -> (),
-        completionHandler: (Asset?, Errors?) -> ()) {
+        data: Data,
+        queue: DispatchQueue? = nil,
+        progress: @escaping (Progress) -> (),
+        completionHandler: @escaping (Asset?, Errors?) -> ()) {
         
-        let url = RomeRoutes.url(.Assets, params: [])
-        let headers = [Headers.ASSET_NAME: name, Headers.ASSET_REVISION: revision, Headers.ASSET_CONTENT_TYPE: Headers.DEFAULT_ASSET_CONTENT_TYPE]
-        
-        NetworkManager.sharedInstance().upload(.POST, url, headers: headers, data: data).progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
-            
-                progress(bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
-            
-            }
+        let url = RomeRoutes.url(route: .Assets, params: [])
+        let headers : HTTPHeaders = [Headers.ASSET_NAME: name, Headers.ASSET_REVISION: revision, Headers.ASSET_CONTENT_TYPE: Headers.DEFAULT_ASSET_CONTENT_TYPE]
+
+        NetworkManager.shared.upload(data, to: url, method: HTTPMethod.post, headers: headers).uploadProgress(closure: {
+            progress($0)
+            return
+        })
             .validate().responseJSON(queue: queue) { response in
-                
                 switch response.result {
-                case .Success(let assetJSON):
-                    if let asset = Mapper<Asset>().map(assetJSON) {
+                case .success(let assetJSON):
+                    if let asset = Mapper<Asset>().map(JSONObject: assetJSON) {
                         completionHandler(asset, nil)
                     } else {
                         completionHandler(nil, Errors.ErrorMappingAsset)
                     }
-                case .Failure:
-                    completionHandler(nil, Errors.errorTypeFromResponse(response.response))
+                case .failure:
+                    completionHandler(nil, Errors.errorTypeFromResponse(response: response.response))
                 }
-                
         }
-        
     }
     
     public static func delete(
         id: String,
-        queue: dispatch_queue_t? = nil,
-        completionHandler: (Bool?, Errors?) -> ()) {
+        queue: DispatchQueue? = nil,
+        completionHandler: @escaping (Bool?, Errors?) -> ()) {
         
-        let url = RomeRoutes.url(.Assets, params: [id])
+        let url = RomeRoutes.url(route: .Assets, params: [id])
         
-        NetworkManager.sharedInstance().request(.DELETE, url, parameters: nil, encoding: .URL, headers: nil).validate().responseString(queue: queue) { response in
+        NetworkManager.shared.request(url, method: HTTPMethod.delete, encoding: URLEncoding.default, headers: nil).validate().responseString(queue: queue) { response in
             
             switch response.result {
-            case .Success:
+            case .success:
                 completionHandler(true, nil)
-            case .Failure:
-                completionHandler(false, Errors.errorTypeFromResponse(response.response))
+            case .failure:
+                completionHandler(false, Errors.errorTypeFromResponse(response: response.response))
             }
             
         }
@@ -131,19 +127,19 @@ public class Assets {
     public static func updateStatus(
         id: String,
         active: Bool,
-        queue: dispatch_queue_t? = nil,
-        completionHandler: (Bool?, Errors?) -> ()) {
+        queue: DispatchQueue? = nil,
+        completionHandler: @escaping (Bool?, Errors?) -> ()) {
         
-        let url = RomeRoutes.url(.Assets, params: [id])
+        let url = RomeRoutes.url(route: .Assets, params: [id])
         let params = ["active": active]
         
-        NetworkManager.sharedInstance().request(.PATCH, url, parameters: params, encoding: .JSON, headers: nil).validate().responseString(queue: queue) { response in
+        NetworkManager.shared.request(url, method: .patch, parameters: params, encoding: JSONEncoding.default, headers: nil).validate().responseString(queue: queue) { response in
             
             switch response.result {
-            case .Success:
+            case .success:
                 completionHandler(true, nil)
-            case .Failure:
-                completionHandler(false, Errors.errorTypeFromResponse(response.response))
+            case .failure:
+                completionHandler(false, Errors.errorTypeFromResponse(response: response.response))
             }
             
         }

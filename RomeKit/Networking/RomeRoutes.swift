@@ -3,16 +3,14 @@ public enum RomeRoutes: String {
     case Assets
     case Clients
     
-    public static func url(route: RomeRoutes, params: [String]) -> NSURL {
+    public static func url(route: RomeRoutes, params: [String]) -> URL {
         
-        var fullUrl = NetworkManager.baseUrl + route.rawValue.lowercaseString
+        var fullUrl : String = NetworkManager.baseUrl + route.rawValue.lowercased()
         
         for param in params {
-            fullUrl = fullUrl.stringByAppendingString("/\(param)")
+            fullUrl += "/\(param)"
         }
         
-        return NSURL(string: fullUrl)!
-        
+        return URL(string: fullUrl)!
     }
-    
 }

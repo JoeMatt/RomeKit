@@ -5,7 +5,7 @@ class FileHelpers {
     static func loadJSONStringFromFile(name: String) -> String? {
         
         if let path = NSBundle(forClass: self).pathForResource(name, ofType: ".json") {
-            if let data = NSData(contentsOfFile: path) {
+            if let data = Data(contentsOfFile: path) {
                 return String(data: data, encoding:NSUTF8StringEncoding)
             }
         }
@@ -14,10 +14,10 @@ class FileHelpers {
         
     }
     
-    static func loadZipDataFromFile(name: String) -> NSData? {
+    static func loadZipDataFromFile(name: String) -> Data? {
         
         if let path = NSBundle(forClass: self).pathForResource(name, ofType: ".zip") {
-            if let data = NSData(contentsOfFile: path) {
+            if let data = Data(contentsOfFile: path) {
                 return data
             }
         }

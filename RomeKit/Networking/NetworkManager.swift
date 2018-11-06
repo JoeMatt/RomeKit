@@ -5,38 +5,24 @@ class NetworkManager {
     
     private(set) static var baseUrl: String = String()
     
-    static var configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+    static var configuration = URLSessionConfiguration.default
     static var serverTrustPolicies = [String: ServerTrustPolicy]()
     
-    private static var _sharedInstance: Manager?
+    static private(set) var shared: SessionManager = SessionManager(configuration: configuration, serverTrustPolicyManager: ServerTrustPolicyManager(policies:serverTrustPolicies))
     
     static var additionalHeaders: [NSObject : AnyObject]? {
-        
         didSet {
             if let _ = additionalHeaders {
-                configuration.HTTPAdditionalHeaders = additionalHeaders
+                configuration.httpAdditionalHeaders = additionalHeaders
             } else {
-                configuration.HTTPAdditionalHeaders = nil
+                configuration.httpAdditionalHeaders = nil
             }
-            _sharedInstance = Manager(configuration: configuration, serverTrustPolicyManager: ServerTrustPolicyManager(policies:serverTrustPolicies))
+            shared = SessionManager(configuration: configuration, serverTrustPolicyManager: ServerTrustPolicyManager(policies:serverTrustPolicies))
         }
-        
-    }
-    
-    static func sharedInstance() -> Manager {
-        
-        if _sharedInstance == nil {
-            _sharedInstance = Manager(configuration: configuration, serverTrustPolicyManager: ServerTrustPolicyManager(policies:serverTrustPolicies))
-        }
-        return _sharedInstance!
-        
     }
     
     static func setup(baseUrl: String, apiKey: String) {
-        
-        NetworkManager.additionalHeaders = [Headers.API_KEY : apiKey]
+        NetworkManager.additionalHeaders = [Headers.API_KEY : apiKey] as [NSObject : AnyObject]
         self.baseUrl = baseUrl
-        
     }
-    
 }

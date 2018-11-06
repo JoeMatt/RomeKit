@@ -10,7 +10,7 @@ public class Asset: Mappable {
     public var created_at: NSDate?
     public var updated_at: NSDate?
     
-    required public init?(_ map: Map) {
+    required public init?(map: Map) {
         
     }
     
@@ -21,8 +21,8 @@ public class Asset: Mappable {
         revision        <- map["revision"]
         file_extension  <- map["extension"]
         active          <- map["active"]
-        created_at      <- (map["createdAt"], ISO8601MilliSecondsDateTransform())
-        updated_at      <- (map["updatedAt"], ISO8601MilliSecondsDateTransform())
+        created_at      <- map["createdAt"]
+        updated_at      <- map["updatedAt"]
         
     }
     
