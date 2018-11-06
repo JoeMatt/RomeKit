@@ -1,4 +1,5 @@
 import ObjectMapper
+import Foundation
 
 public class Asset: Mappable {
     
@@ -7,8 +8,8 @@ public class Asset: Mappable {
     public var revision: String?
     public var file_extension: String?
     public var active: Bool?
-    public var created_at: NSDate?
-    public var updated_at: NSDate?
+    public var created_at: Date?
+    public var updated_at: Date?
     
     required public init?(map: Map) {
         
@@ -23,7 +24,5 @@ public class Asset: Mappable {
         active          <- map["active"]
         created_at      <- map["createdAt"]
         updated_at      <- map["updatedAt"]
-        
     }
-    
 }

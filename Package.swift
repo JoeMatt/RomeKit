@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:4.2
 //
 // Package.swift
 // RomeKit
@@ -20,5 +20,6 @@ let package = Package(
     targets: [
         .target(name: "RomeKit", dependencies: ["Alamofire", "ObjectMapper"]),
         .testTarget(name: "RomeKitTests", dependencies: ["RomeKit"])
-    ]
+    ],
+    swiftLanguageVersions: [.v4, .v4_2]
 )
