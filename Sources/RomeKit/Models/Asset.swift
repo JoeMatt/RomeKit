@@ -22,7 +22,7 @@ public class Asset: Mappable {
         revision        <- map["revision"]
         file_extension  <- map["extension"]
         active          <- map["active"]
-        created_at      <- map["createdAt"]
-        updated_at      <- map["updatedAt"]
+        created_at      <- (map["createdAt"], ISO8601MilliSecondsDateTransform())
+        updated_at      <- (map["updatedAt"], ISO8601MilliSecondsDateTransform())
     }
 }

@@ -11,11 +11,8 @@ public class Client: Mappable {
     }
     
     public func mapping(map: Map) {
-        
         id      <- map["_id"]
         name    <- map["name"]
         api_key <- map["api_key"]
-        
     }
-    
 }
