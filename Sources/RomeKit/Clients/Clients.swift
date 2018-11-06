@@ -13,7 +13,7 @@ public class Clients {
             
             switch response.result {
             case .success(let clientsJSON):
-                if let clients = Mapper<Client>().mapArray(JSONString: clientsJSON) {
+                if let clients = Mapper<Client>().mapArray(JSONObject: clientsJSON) {
                     completionHandler(clients, nil)
                 } else {
                     completionHandler(nil, Errors.ErrorMappingClients)
@@ -38,7 +38,7 @@ public class Clients {
             
             switch response.result {
             case .success(let clientJSON):
-                if let client = Mapper<Client>().map(JSONString: clientJSON) {
+                if let client = Mapper<Client>().map(JSONObject: clientJSON) {
                     completionHandler(client, nil)
                 } else {
                     completionHandler(nil, Errors.ErrorMappingClients)

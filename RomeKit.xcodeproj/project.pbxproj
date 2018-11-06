@@ -142,7 +142,8 @@
 				A1A19C541CA7731D00D38032 /* RomeKit.h */,
 				A1A19C561CA7731D00D38032 /* Info.plist */,
 			);
-			path = RomeKit;
+			name = RomeKit;
+			path = Sources/RomeKit;
 			sourceTree = "<group>";
 		};
 		A1A19C5F1CA7731D00D38032 /* RomeKitTests */ = {
@@ -154,7 +155,8 @@
 				A1CE5C9E1CA89F72007D705B /* Sample Data */,
 				A1A19C621CA7731D00D38032 /* Info.plist */,
 			);
-			path = RomeKitTests;
+			name = RomeKitTests;
+			path = Tests/RomeKitTests;
 			sourceTree = "<group>";
 		};
 		A1CE5C901CA83FDB007D705B /* Frameworks */ = {
@@ -304,9 +306,11 @@
 				TargetAttributes = {
 					A1A19C501CA7731D00D38032 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 1010;
 					};
 					A1A19C5A1CA7731D00D38032 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -435,6 +439,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -475,6 +480,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -492,14 +498,15 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(PROJECT_DIR)/Carthage/Build/Mac";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = RomeKit/Info.plist;
+				INFOPLIST_FILE = Sources/RomeKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OneFourSixBC.RomeKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -515,13 +522,14 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(PROJECT_DIR)/Carthage/Build/Mac";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = RomeKit/Info.plist;
+				INFOPLIST_FILE = Sources/RomeKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OneFourSixBC.RomeKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -534,11 +542,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = RomeKitTests/Info.plist;
+				INFOPLIST_FILE = Tests/RomeKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OneFourSixBC.RomeKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -548,11 +557,12 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(PROJECT_DIR)/Carthage/Build/Mac";
-				INFOPLIST_FILE = RomeKitTests/Info.plist;
+				INFOPLIST_FILE = Tests/RomeKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = OneFourSixBC.RomeKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

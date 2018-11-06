@@ -13,7 +13,7 @@ public class Assets {
             
             switch response.result {
             case .success(let assetsJSON):
-                if let assets = Mapper<Asset>().mapArray(JSONString: assetsJSON) {
+                if let assets = Mapper<Asset>().mapArray(JSONObject: assetsJSON) {
                     completionHandler(assets, nil)
                 } else {
                     completionHandler(nil, Errors.ErrorMappingAssets)
@@ -38,7 +38,7 @@ public class Assets {
             
             switch response.result {
             case .success(let assetJSON):
-                if let asset = Mapper<Asset>().map(JSONString: assetJSON) {
+                if let asset = Mapper<Asset>().map(JSONObject: assetJSON) {
                     completionHandler(asset, nil)
                 } else {
                     completionHandler(nil, Errors.ErrorMappingAsset)
@@ -62,7 +62,7 @@ public class Assets {
             
             switch response.result {
             case .success(let assetJSON):
-                if let asset = Mapper<Asset>().map(JSONString: assetJSON) {
+                if let asset = Mapper<Asset>().map(JSONObject: assetJSON) {
                     completionHandler(asset, nil)
                 } else {
                     completionHandler(nil, Errors.ErrorMappingAsset)
